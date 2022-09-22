@@ -8,7 +8,7 @@ class Player:
                  roll: float = 0,
                  pitch: float = 0,
                  yaw: float = 0,
-                 speed: float = 3):
+                 speed: float = 300):
         self.pos = np.array([pos_x, pos_y, pos_z], dtype=float)
         self.orientation = np.array([roll, pitch, yaw], dtype=float)  # roll pitch yaw les noms sont pas forcément bons
         self.speed: float = speed
@@ -16,12 +16,16 @@ class Player:
 
     def add_mouvement(self, orientation: str, time: float):
         dist = self.speed * time
-        ang = .1 * time
+        ang = .5 * time
         match orientation:
             case "av":
                 self.pos[2] += dist
             case "ar":
                 self.pos[2] -= dist
+            case "h":
+                self.pos[1] += dist
+            case "b":
+                self.pos[1] -= dist
             case "d":
                 self.pos[0] += dist
             case "g":
@@ -39,7 +43,8 @@ class Player:
             case "z-":
                 self.orientation[2] -= ang
         self.cpt += 1
-        # print(self.pos)
+        # if self.cpt%100 == 0:
+        print(self.pos)
         print(self.orientation)
 
     def moove_camera(self, horizontal, vertical):
